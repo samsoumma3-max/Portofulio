@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Données des Clients</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">Quincaillerie Le Grand SARL - Système de Gestion</div>
+    <div class="main-layout">
+        <div class="invoice-section">
+            <div class="form-block">
+                <span class="block-title">Gestion des Clients</span>
+                <div class="form-row">
+                    <div class="form-group"><label>Nom Complet :</label><input type="text" id="cName"></div>
+                    <div class="form-group"><label>Téléphone :</label><input type="text" id="cPhone"></div>
+                    <div class="form-group"><label>Adresse :</label><input type="text" id="cAddr"></div>
+                </div>
+                <button class="btn-action" id="btnAddClient">Ajouter le client</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Nom</th><th>Téléphone</th><th>Adresse</th></tr></thead>
+                    <tbody id="clientTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="saisie.html" class="sidebar-btn">Saisie des Articles</a>
+            <a href="clients.html" class="sidebar-btn active">Données des Clients</a>
+            <a href="index.html" class="sidebar-btn">Créer une Facture</a>
+            <a href="stock.html" class="sidebar-btn">Mouvement du Stock</a>
+            <a href="recettes.html" class="sidebar-btn">Registre des Recettes</a>
+        </div>
+    </div>
+</div>
+<script>
+    let clients = JSON.parse(localStorage.getItem('clients')) || [];
+    const tbody = document.getElementById('clientTableBody');
+
+    function renderClients() {
+        tbody.innerHTML = '';
+        clients.forEach(c => {
+            let row = document.createElement('tr');
+            row.innerHTML = `<td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td>`;
+            tbody.appendChild(row);
+        });
+    }
+
+    document.getElementById('btnAddClient').addEventListener('click', function() {
+        const name = document.getElementById('cName').value;
+        const phone = document.getElementById('cPhone').value;
+        const address = document.getElementById('cAddr').value;
+        if(!name) return alert('Nom obligatoire');
+        clients.push({name, phone, address});
+        localStorage.setItem('clients', JSON.stringify(clients));
+        document.getElementById('cName').value=''; document.getElementById('cPhone').value=''; document.getElementById('cAddr').value='';
+        renderClients();
+    });
+    renderClients();
+</script>
+</body>
+</html>

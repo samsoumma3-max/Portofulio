@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une Facture</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">Quincaillerie Le Grand SARL - Système de Gestion</div>
+    <div class="main-layout">
+        <div class="invoice-section">
+            <div class="form-block">
+                <span class="block-title">Données de la Facture et du Client</span>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>N° Facture :</label>
+                        <input type="text" id="invoiceNum" readonly style="background-color: #eee;">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom du Client :</label>
+                        <select id="clientSelect">
+                            <option value="">Choisir un client...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date :</label>
+                        <input type="date" id="invoiceDate">
+                    </div>
+                </div>
+            </div>
+            <div class="form-block spec-block" style="margin-top: 20px;">
+                <span class="block-title">Ajouter des Articles à la Facture</span>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label>Article (Produit) :</label>
+                        <select id="productSelect">
+                            <option value="">Choisir un produit...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>En Stock :</label>
+                        <input type="text" id="stockAvailable" readonly style="background-color: #eee; font-weight: bold; color: red;">
+                    </div>
+                    <div class="form-group">
+                        <label>Prix Unitaire (DA) :</label>
+                        <input type="number" id="unitPrice" readonly style="background-color: #eee;">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantité :</label>
+                        <input type="number" id="quantity" value="1" min="1">
+                    </div>
+                </div>
+                <button class="btn-add" id="addBtn">+ Ajouter l'article</button>
+            </div>
+            <div class="table-container" style="margin-top: 20px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Référence</th>
+                            <th>Article</th>
+                            <th>Prix Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Montant Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoiceItems"></tbody>
+                </table>
+                <div class="summary-container">
+                    <div class="total-display" id="grandTotalDisplay">Montant Total Global : 0.00 DA</div>
+                    <button class="btn-save" id="saveBtn">Sauvegarder la facture et transférer au stock</button>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="saisie.html" class="sidebar-btn">Saisie des Articles</a>
+            <a href="clients.html" class="sidebar-btn">Données des Clients</a>
+            <a href="index.html" class="sidebar-btn active">Créer une Facture</a>
+            <a href="stock.html" class="sidebar-btn">Mouvement du Stock</a>
+            <a href="recettes.html" class="sidebar-btn">Registre des Recettes</a>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Saisie des Articles (CRUD)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">Quincaillerie Le Grand SARL - Système de Gestion</div>
+    <div class="main-layout">
+        <div class="invoice-section">
+            <div class="form-block">
+                <span class="block-title" id="formTitle">Ajouter / Modifier un Article</span>
+                <input type="hidden" id="editIndex">
+                <div class="form-row">
+                    <div class="form-group"><label>Désignation :</label><input type="text" id="pName" placeholder="Ex: Marteau"></div>
+                    <div class="form-group"><label>Prix d'Achat :</label><input type="number" id="pAchat" placeholder="0.00"></div>
+                    <div class="form-group"><label>Prix de Vente :</label><input type="number" id="pVente" placeholder="0.00"></div>
+                    <div class="form-group"><label>Quantité Initiale (Stock) :</label><input type="number" id="pStock" placeholder="0"></div>
+                </div>
+                <button class="btn-action" id="btnSaveProduct">Enregistrer l'article</button>
+                <button class="btn-action" id="btnCancel" style="background-color: #aaa; display:none;">Annuler</button>
+            </div>
+
+            <!-- جدول الـ CRUD لعرض وتعديل وحذف المنتجات -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Désignation</th><th>Prix d'Achat</th><th>Prix de Vente</th><th>En Stock</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="productTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="saisie.html" class="sidebar-btn active">Saisie des Articles</a>
+            <a href="clients.html" class="sidebar-btn">Données des Clients</a>
+            <a href="index.html" class="sidebar-btn">Créer une Facture</a>
+            <a href="stock.html" class="sidebar-btn">Mouvement du Stock</a>
+            <a href="recettes.html" class="sidebar-btn">Registre des Recettes</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    const tbody = document.getElementById('productTableBody');
+
+    function renderProducts() {
+        tbody.innerHTML = '';
+        products.forEach((p, index) => {
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td>${p.pAchat} DA</td>
+                <td>${p.pVente} DA</td>
+                <td style="font-weight:bold; color:${p.stock > 0 ? 'green':'red'}">${p.stock}</td>
+                <td>
+                    <button class="btn-action btn-edit" onclick="editProduct(${index})">Modifier</button>
+                    <button class="btn-action btn-delete" onclick="deleteProduct(${index})">Supprimer</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    document.getElementById('btnSaveProduct').addEventListener('click', function() {
+        const name = document.getElementById('pName').value;
+        const achat = parseFloat(document.getElementById('pAchat').value);
+        const vente = parseFloat(document.getElementById('pVente').value);
+        const stock = parseInt(document.getElementById('pStock').value);
+        const editIndex = document.getElementById('editIndex').value;
+
+        if (!name || isNaN(achat) || isNaN(vente) || isNaN(stock)) {
+            alert('Remplir tous les champs!'); return;
+        }
+
+        if (editIndex === "") {
+            // إضافة منتج جديد تماماً مع كميته الأصلية في الباقي والمخزن تلقائياً
+            const id = 'PRD' + String(products.length + 1).padStart(3, '0');
+            products.push({ id, name, pAchat: achat, pVente: vente, stock: stock });
+        } else {
+            // تعديل سطر موجود
+            products[editIndex].name = name;
+            products[editIndex].pAchat = achat;
+            products[editIndex].pVente = vente;
+            products[editIndex].stock = stock;
+        }
+
+        localStorage.setItem('products', JSON.stringify(products));
+        resetForm();
+        renderProducts();
+    });
+
+    window.editProduct = function(index) {
+        const p = products[index];
+        document.getElementById('pName').value = p.name;
+        document.getElementById('pAchat').value = p.pAchat;
+        document.getElementById('pVente').value = p.pVente;
+        document.getElementById('pStock').value = p.stock;
+        document.getElementById('editIndex').value = index;
+        document.getElementById('formTitle').textContent = "Modifier l'article: " + p.id;
+        document.getElementById('btnCancel').style.display = "inline-block";
+    }
+
+    window.deleteProduct = function(index) {
+        if (confirm('Supprimer cet article?')) {
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            renderProducts();
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('pName').value = '';
+        document.getElementById('pAchat').value = '';
+        document.getElementById('pVente').value = '';
+        document.getElementById('pStock').value = '';
+        document.getElementById('editIndex').value = '';
+        document.getElementById('formTitle').textContent = "Ajouter / Modifier un Article";
+        document.getElementById('btnCancel').style.display = "none";
+    }
+    document.getElementById('btnCancel').addEventListener('click', resetForm);
+    renderProducts();
+</script>
+</body>
+</html>

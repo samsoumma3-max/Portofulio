@@ -1,0 +1,201 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.header {
+    background-color: #0b5394;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.main-layout {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+.invoice-section {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-btn {
+    display: block;
+    background-color: #0b5394;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.sidebar-btn.active {
+    background-color: #f1c232;
+    color: #000;
+}
+
+.sidebar-btn:hover {
+    opacity: 0.9;
+}
+
+.form-block {
+    border: 2px solid #3d85c6;
+    border-radius: 6px;
+    padding: 20px;
+    position: relative;
+    background-color: #fff;
+}
+
+.spec-block {
+    display: flex; 
+    flex-direction: column;
+}
+
+.block-title {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background-color: white;
+    padding: 0 10px;
+    color: #0b5394;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-group input, .form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.btn-add, .btn-action {
+    background-color: #00a86b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    align-self: flex-start;
+}
+
+.btn-action.btn-edit {
+    background-color: #f1c232;
+    color: black;
+    padding: 5px 10px;
+    margin: 0 2px;
+    font-size: 12px;
+}
+
+.btn-action.btn-delete {
+    background-color: #cc0000;
+    color: white;
+    padding: 5px 10px;
+    margin: 0 2px;
+    font-size: 12px;
+}
+
+.table-container {
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+th, td {
+    border: 1px solid #3d85c6;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #0b5394;
+    color: white;
+    font-weight: bold;
+}
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.total-display {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0b5394;
+}
+
+.btn-save {
+    background-color: #3d85c6;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    align-self: flex-start;
+}

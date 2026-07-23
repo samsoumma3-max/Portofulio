@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Registre des Recettes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">Quincaillerie Le Grand SARL - Système de Gestion</div>
+    <div class="main-layout">
+        <div class="invoice-section">
+            <div class="form-block">
+                <span class="block-title">Registre des Recettes Financières</span>
+                <p style="margin: 15px 0; font-size: 18px; color: #0b5394; font-weight: bold;" id="caDisplay">Chiffre d'affaires : 0.00 DA</p>
+                <table>
+                    <thead>
+                        <tr><th>N° Facture</th><th>Date</th><th>Client</th><th>Montant Total</th></tr>
+                    </thead>
+                    <tbody id="recetteTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="saisie.html" class="sidebar-btn">Saisie des Articles</a>
+            <a href="clients.html" class="sidebar-btn">Données des Clients</a>
+            <a href="index.html" class="sidebar-btn">Créer une Facture</a>
+            <a href="stock.html" class="sidebar-btn">Mouvement du Stock</a>
+            <a href="recettes.html" class="sidebar-btn active">Registre des Recettes</a>
+        </div>
+    </div>
+</div>
+<script>
+    let invoices = JSON.parse(localStorage.getItem('invoices')) || [];
+    const tbody = document.getElementById('recetteTableBody');
+    let totalCA = 0;
+
+    invoices.forEach(inv => {
+        totalCA += inv.total;
+        let row = document.createElement('tr');
+        row.innerHTML = `<td>${inv.num}</td><td>${inv.date}</td><td>${inv.client}</td><td>${inv.total.toFixed(2)} DA</td>`;
+        tbody.appendChild(row);
+    });
+
+    document.getElementById('caDisplay').textContent = `Chiffre d'affaires Total : ${totalCA.toFixed(2)} DA`;
+</script>
+</body>
+</html>

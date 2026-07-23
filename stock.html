@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mouvement du Stock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">Quincaillerie Le Grand SARL - Système de Gestion</div>
+    <div class="main-layout">
+        <div class="invoice-section">
+            <div class="form-block">
+                <span class="block-title">Mouvement du Stock (Inventaire en Temps Réel)</span>
+                <table style="margin-top:15px;">
+                    <thead>
+                        <tr><th>Code</th><th>Désignation</th><th>Stock Restant (Disponible)</th><th>Statut</th></tr>
+                    </thead>
+                    <tbody id="stockTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="saisie.html" class="sidebar-btn">Saisie des Articles</a>
+            <a href="clients.html" class="sidebar-btn">Données des Clients</a>
+            <a href="index.html" class="sidebar-btn">Créer une Facture</a>
+            <a href="stock.html" class="sidebar-btn active">Mouvement du Stock</a>
+            <a href="recettes.html" class="sidebar-btn">Registre des Recettes</a>
+        </div>
+    </div>
+</div>
+<script>
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    const tbody = document.getElementById('stockTableBody');
+
+    products.forEach(p => {
+        let row = document.createElement('tr');
+        let status = p.stock > 10 ? '<span style="color:green;">Disponible</span>' : '<span style="color:orange;">Stock Faible</span>';
+        if(p.stock <= 0) status = '<span style="color:red; font-weight:bold;">Épuisé</span>';
+        
+        row.innerHTML = `
+            <td>${p.id}</td>
+            <td>${p.name}</td>
+            <td style="font-weight:bold; font-size:16px;">${p.stock} unités</td>
+            <td>${status}</td>
+        `;
+        tbody.appendChild(row);
+    });
+</script>
+</body>
+</html>
